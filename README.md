@@ -41,7 +41,7 @@ Before deploying, ensure you have:
 1. **Clone and configure**:
    ```bash
    git clone <this-repo>
-   cd terraform-gitlab-gke
+   cd terraform-gitlab-gke/infra
    cp terraform.tfvars.example terraform.tfvars
    ```
 
@@ -53,7 +53,7 @@ Before deploying, ensure you have:
    gitlab_storage_size = "50Gi"
    ```
 
-3. **Deploy**:
+3. **Deploy** (from `infra/`):
    ```bash
    terraform init
    terraform plan
