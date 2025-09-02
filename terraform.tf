@@ -1,1 +1,0 @@
-// Configuration moved to infra/. See infra/backend.tf and infra/versions.tf
