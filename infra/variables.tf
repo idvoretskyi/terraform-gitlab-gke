@@ -68,7 +68,7 @@ variable "enable_grafana" {
 variable "enable_hpa" {
   description = "Enable Horizontal Pod Autoscaler for GitLab components"
   type        = bool
-  default     = false  # Disable temporarily to avoid namespace dependency issue
+  default     = false
 }
 
 variable "enable_vpa" {

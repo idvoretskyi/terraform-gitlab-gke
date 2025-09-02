@@ -9,10 +9,10 @@
 # cluster_name = "my-gitlab-cluster"
 
 # Node Configuration (cost-optimized defaults)
-node_count               = 2
-node_machine_type        = "e2-standard-2"
-disk_size_gb            = 50
-use_preemptible_nodes   = true
+node_count             = 2
+node_machine_type      = "e2-standard-2"
+disk_size_gb           = 50
+use_preemptible_nodes  = true
 
 # GitLab Configuration
 # gitlab_domain = "gitlab.example.com"  # Leave empty to use LoadBalancer IP with nip.io
@@ -20,7 +20,7 @@ gitlab_storage_size = "50Gi"
 
 # Monitoring Configuration (optional)
 # enable_prometheus = true          # Enable Prometheus monitoring stack
-# enable_grafana = true            # Enable Grafana dashboards (requires Prometheus)
-enable_hpa = true                  # Enable Horizontal Pod Autoscaler (recommended)
-# enable_vpa = false               # Enable Vertical Pod Autoscaler (experimental)
+# enable_grafana = true             # Enable Grafana dashboards (requires Prometheus)
+enable_hpa = true                   # Enable Horizontal Pod Autoscaler (recommended)
+# enable_vpa = false                # Enable Vertical Pod Autoscaler (experimental)
 # prometheus_storage_size = "50Gi" # Storage for Prometheus data
