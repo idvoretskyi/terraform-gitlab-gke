@@ -33,13 +33,13 @@ resource "helm_release" "gitlab" {
       global = {
         edition = "ce"
         hosts = {
-          domain = var.gitlab_domain != "" ? var.gitlab_domain : "${kubernetes_service.gitlab_webservice_default.status.0.load_balancer.0.ingress.0.ip}.nip.io"
+          domain     = var.gitlab_domain != "" ? var.gitlab_domain : "${kubernetes_service.gitlab_webservice_default.status.0.load_balancer.0.ingress.0.ip}.nip.io"
           externalIP = var.gitlab_domain == "" ? kubernetes_service.gitlab_webservice_default.status.0.load_balancer.0.ingress.0.ip : null
         }
-        
+
         ingress = {
           configureCertmanager = false
-          class = "gce"
+          class                = "gce"
           tls = {
             enabled = false
           }
@@ -92,8 +92,8 @@ resource "helm_release" "gitlab" {
         auth = {
           existingSecret = kubernetes_secret.gitlab_postgresql_password.metadata[0].name
           secretKeys = {
-            adminPasswordKey     = "postgresql-postgres-password"
-            userPasswordKey      = "postgresql-password"
+            adminPasswordKey = "postgresql-postgres-password"
+            userPasswordKey  = "postgresql-password"
           }
         }
         primary = {
@@ -119,8 +119,8 @@ resource "helm_release" "gitlab" {
       redis = {
         install = true
         auth = {
-          enabled        = true
-          existingSecret = kubernetes_secret.gitlab_redis_secret.metadata[0].name
+          enabled                   = true
+          existingSecret            = kubernetes_secret.gitlab_redis_secret.metadata[0].name
           existingSecretPasswordKey = "redis-password"
         }
         master = {
@@ -241,11 +241,11 @@ resource "helm_release" "gitlab" {
       gitlab-runner = {
         install = false
       }
-      
+
       nginx-ingress = {
         enabled = false
       }
-      
+
       certmanager = {
         install = false
       }
@@ -287,7 +287,7 @@ resource "kubernetes_service" "gitlab_webservice_default" {
       target_port = 8080
     }
 
-    type                    = "LoadBalancer"
+    type                        = "LoadBalancer"
     load_balancer_source_ranges = ["0.0.0.0/0"]
   }
 

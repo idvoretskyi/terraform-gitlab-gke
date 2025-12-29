@@ -1,8 +1,8 @@
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
-  location = var.zone  # Use zone instead of region for cost efficiency
+  location = var.zone # Use zone instead of region for cost efficiency
   project  = var.project_id
-  
+
   # Disable deletion protection to allow recreation
   deletion_protection = false
 
@@ -66,7 +66,7 @@ resource "google_project_iam_member" "gke_nodes" {
 
 resource "google_container_node_pool" "primary_nodes" {
   name       = "${var.cluster_name}-node-pool"
-  location   = var.zone  # Use zone for cost efficiency
+  location   = var.zone # Use zone for cost efficiency
   cluster    = google_container_cluster.primary.name
   node_count = var.node_count
   project    = var.project_id
@@ -74,7 +74,7 @@ resource "google_container_node_pool" "primary_nodes" {
   # Enable autoscaling with minimal settings for cost
   autoscaling {
     min_node_count = 1
-    max_node_count = 3  # Reduce max nodes for cost efficiency
+    max_node_count = 3 # Reduce max nodes for cost efficiency
   }
 
   # Node management
