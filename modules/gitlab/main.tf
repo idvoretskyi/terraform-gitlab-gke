@@ -24,7 +24,7 @@ resource "helm_release" "gitlab" {
   name       = "gitlab"
   repository = "https://charts.gitlab.io/"
   chart      = "gitlab"
-  version    = "7.5.0"
+  version    = "9.11.2"
   namespace  = kubernetes_namespace.gitlab.metadata[0].name
   timeout    = 1200
 
@@ -158,7 +158,7 @@ resource "helm_release" "gitlab" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
@@ -180,7 +180,7 @@ resource "helm_release" "gitlab" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
@@ -206,7 +206,7 @@ resource "helm_release" "gitlab" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
@@ -228,7 +228,7 @@ resource "helm_release" "gitlab" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"

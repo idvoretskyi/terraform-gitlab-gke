@@ -1,26 +1,32 @@
 # Example Terraform variables file
-# Copy this file to terraform.tfvars and customize for your deployment
+# Copy to terraform.tfvars and customize for your deployment.
+#
+# Project and region/zone are read automatically from your local gcloud config:
+#   gcloud config set project  YOUR_PROJECT_ID
+#   gcloud config set compute/region YOUR_REGION
+#   gcloud config set compute/zone   YOUR_ZONE
+# Override here only when you need to target a different project/region.
 
-# GCP Configuration (will be read from gcloud config if not specified)
+# GCP Configuration (fallback when gcloud config is not set)
 # region = "us-east1"
-# zone   = "us-east1-a"
+# zone   = "us-east1-c"
 
-# Cluster Configuration (if empty, will use username-gitlab-gke-cluster)
+# Cluster name (defaults to <your-os-username>-gitlab-gke-cluster if empty)
 # cluster_name = "my-gitlab-cluster"
 
-# Node Configuration (cost-optimized defaults)
-node_count             = 2
-node_machine_type      = "e2-standard-2"
-disk_size_gb           = 50
-use_preemptible_nodes  = true
+# Node configuration — cost-optimised defaults
+node_count            = 1             # Autoscaler handles scale-out (max 3)
+node_machine_type     = "e2-standard-2"
+disk_size_gb          = 30
+use_spot_nodes        = true          # Spot VMs: ~60-91 % savings vs on-demand
 
-# GitLab Configuration
-# gitlab_domain = "gitlab.example.com"  # Leave empty to use LoadBalancer IP with nip.io
+# GitLab configuration
+# gitlab_domain = "gitlab.example.com"  # Leave empty to auto-generate via nip.io
 gitlab_storage_size = "50Gi"
 
-# Monitoring Configuration (optional)
-# enable_prometheus = true          # Enable Prometheus monitoring stack
-# enable_grafana = true             # Enable Grafana dashboards (requires Prometheus)
-enable_hpa = true                   # Enable Horizontal Pod Autoscaler (recommended)
-# enable_vpa = false                # Enable Vertical Pod Autoscaler (experimental)
-# prometheus_storage_size = "50Gi" # Storage for Prometheus data
+# Monitoring (all optional)
+# enable_prometheus       = true   # Prometheus + Alertmanager stack
+# enable_grafana          = true   # Grafana dashboards (requires Prometheus)
+enable_hpa              = true     # HPA for gitlab-webservice (recommended)
+# enable_vpa              = false  # Vertical Pod Autoscaler (experimental)
+# prometheus_storage_size = "50Gi"

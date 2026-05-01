@@ -19,7 +19,7 @@ variable "cluster_name" {
 }
 
 variable "node_count" {
-  description = "Number of nodes in the default node pool"
+  description = "Initial number of nodes in the default node pool"
   type        = number
 }
 
@@ -33,8 +33,8 @@ variable "disk_size_gb" {
   type        = number
 }
 
-variable "use_preemptible_nodes" {
-  description = "Use preemptible nodes for cost optimization"
+variable "use_spot_nodes" {
+  description = "Use Spot VMs for cost optimization (~60-91% savings vs on-demand). Replaces the deprecated preemptible option."
   type        = bool
 }
 
@@ -47,4 +47,3 @@ variable "subnet_name" {
   description = "Name of the subnet"
   type        = string
 }
-
