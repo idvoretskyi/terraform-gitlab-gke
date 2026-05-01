@@ -1,35 +1,52 @@
 version: 2
+# Configuration for Dependabot to automatically check for updates
+# in Terraform modules and GitHub Actions.
+#
+# Shared settings rationale:
+# - schedule.interval: "daily" - All modules use daily checks to ensure
+#   timely security updates and bug fixes across the entire infrastructure.
+# - open-pull-requests-limit: 10 - Prevents overwhelming the review queue
+#   while allowing multiple PRs for different dependencies in parallel.
+#
+# Note: Dependabot doesn't support YAML anchors, so settings are repeated per
+# directory. This is intentional to maintain consistency across all modules.
 updates:
+  # Main infrastructure configuration
   - package-ecosystem: "terraform"
     directory: "/infra"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
 
+  # GKE module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/gke"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
 
+  # GitLab module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/gitlab"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
 
+  # Networking module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/networking"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
 
+  # Monitoring module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/monitoring"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
 
+  # GitHub Actions workflow dependencies
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
