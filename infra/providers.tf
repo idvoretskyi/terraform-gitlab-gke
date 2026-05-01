@@ -13,12 +13,11 @@ locals {
   cluster_name = var.cluster_name != "" ? var.cluster_name : "${data.external.whoami.result.username}-gitlab-gke-cluster"
 }
 
-# Explicitly wire project and region from local gcloud config so the provider
-# inherits them without relying on environment variables.
-provider "google" {
-  project = local.project_id
-  region  = local.region
-}
+# The google provider inherits project and region automatically from the
+# active gcloud config (application default credentials + `gcloud config set`).
+# Do NOT reference locals here — those locals depend on data sources that
+# themselves require this provider, which would create a dependency cycle.
+provider "google" {}
 
 provider "kubernetes" {
   host                   = "https://${module.gke.endpoint}"
