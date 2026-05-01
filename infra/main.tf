@@ -9,16 +9,16 @@ module "networking" {
 module "gke" {
   source = "../modules/gke"
 
-  project_id            = local.project_id
-  region                = local.region
-  zone                  = local.zone
-  cluster_name          = local.cluster_name
-  node_count            = var.node_count
-  node_machine_type     = var.node_machine_type
-  disk_size_gb          = var.disk_size_gb
-  use_preemptible_nodes = var.use_preemptible_nodes
-  network_name          = module.networking.network_name
-  subnet_name           = module.networking.subnet_name
+  project_id        = local.project_id
+  region            = local.region
+  zone              = local.zone
+  cluster_name      = local.cluster_name
+  node_count        = var.node_count
+  node_machine_type = var.node_machine_type
+  disk_size_gb      = var.disk_size_gb
+  use_spot_nodes    = var.use_spot_nodes
+  network_name      = module.networking.network_name
+  subnet_name       = module.networking.subnet_name
 
   depends_on = [module.networking]
 }

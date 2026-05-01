@@ -13,6 +13,10 @@ locals {
   cluster_name = var.cluster_name != "" ? var.cluster_name : "${data.external.whoami.result.username}-gitlab-gke-cluster"
 }
 
+# The google provider inherits project and region automatically from the
+# active gcloud config (application default credentials + `gcloud config set`).
+# Do NOT reference locals here — those locals depend on data sources that
+# themselves require this provider, which would create a dependency cycle.
 provider "google" {}
 
 provider "kubernetes" {
@@ -21,8 +25,9 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.gke.ca_certificate)
 }
 
+# helm provider v3: kubernetes block is now an object assignment (= { ... })
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     host                   = "https://${module.gke.endpoint}"
     token                  = data.google_client_config.default.access_token
     cluster_ca_certificate = base64decode(module.gke.ca_certificate)

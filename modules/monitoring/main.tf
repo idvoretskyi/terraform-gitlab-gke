@@ -17,7 +17,7 @@ resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
-  version    = "55.5.0"
+  version    = "84.5.0"
   namespace  = kubernetes_namespace.monitoring.metadata[0].name
   timeout    = 1200
 
@@ -52,7 +52,7 @@ resource "helm_release" "prometheus" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
@@ -63,7 +63,7 @@ resource "helm_release" "prometheus" {
 
       # Grafana configuration
       grafana = {
-        enabled = var.enable_grafana
+        enabled       = var.enable_grafana
         adminPassword = random_password.grafana_admin_password[0].result
         resources = {
           requests = {
@@ -76,13 +76,13 @@ resource "helm_release" "prometheus" {
           }
         }
         persistence = {
-          enabled = true
-          size    = "10Gi"
+          enabled          = true
+          size             = "10Gi"
           storageClassName = "standard-rwo"
         }
         tolerations = [
           {
-            key      = "cloud.google.com/gke-preemptible"
+            key      = "cloud.google.com/gke-spot"
             operator = "Equal"
             value    = "true"
             effect   = "NoSchedule"
@@ -105,7 +105,7 @@ resource "helm_release" "prometheus" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
@@ -187,7 +187,7 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "gitlab_webservice_hpa" {
   count = var.enable_hpa ? 1 : 0
 
   metadata {
-    name      = "gitlab-webservice-hpa" 
+    name      = "gitlab-webservice-hpa"
     namespace = data.kubernetes_namespace.gitlab[0].metadata[0].name
   }
 
@@ -226,19 +226,19 @@ resource "kubernetes_horizontal_pod_autoscaler_v2" "gitlab_webservice_hpa" {
     behavior {
       scale_up {
         stabilization_window_seconds = 300
-        select_policy               = "Max"
+        select_policy                = "Max"
         policy {
-          type          = "Percent"
-          value         = 100
+          type           = "Percent"
+          value          = 100
           period_seconds = 15
         }
       }
       scale_down {
         stabilization_window_seconds = 300
-        select_policy               = "Max"
+        select_policy                = "Max"
         policy {
-          type          = "Percent"
-          value         = 10
+          type           = "Percent"
+          value          = 10
           period_seconds = 60
         }
       }

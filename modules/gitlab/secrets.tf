@@ -123,11 +123,11 @@ resource "kubernetes_secret" "gitlab_rails_secret" {
   data = {
     "secrets.yml" = yamlencode({
       production = {
-        secret_key_base                   = random_password.rails_secret_key_base.result
-        otp_key_base                     = random_password.rails_otp_key_base.result
-        db_key_base                      = random_password.rails_db_key_base.result
-        openid_connect_signing_key       = random_password.rails_openid_connect_signing_key.result
-        ci_jwt_signing_key               = random_password.rails_ci_jwt_signing_key.result
+        secret_key_base            = random_password.rails_secret_key_base.result
+        otp_key_base               = random_password.rails_otp_key_base.result
+        db_key_base                = random_password.rails_db_key_base.result
+        openid_connect_signing_key = random_password.rails_openid_connect_signing_key.result
+        ci_jwt_signing_key         = random_password.rails_ci_jwt_signing_key.result
       }
     })
   }
