@@ -17,7 +17,7 @@ resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
-  version    = "55.5.0"
+  version    = "84.5.0"
   namespace  = kubernetes_namespace.monitoring.metadata[0].name
   timeout    = 1200
 
@@ -52,7 +52,7 @@ resource "helm_release" "prometheus" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
@@ -82,7 +82,7 @@ resource "helm_release" "prometheus" {
         }
         tolerations = [
           {
-            key      = "cloud.google.com/gke-preemptible"
+            key      = "cloud.google.com/gke-spot"
             operator = "Equal"
             value    = "true"
             effect   = "NoSchedule"
@@ -105,7 +105,7 @@ resource "helm_release" "prometheus" {
           }
           tolerations = [
             {
-              key      = "cloud.google.com/gke-preemptible"
+              key      = "cloud.google.com/gke-spot"
               operator = "Equal"
               value    = "true"
               effect   = "NoSchedule"
