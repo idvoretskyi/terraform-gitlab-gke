@@ -1,54 +1,70 @@
 version: 2
-# Configuration for Dependabot to automatically check for updates
-# in Terraform modules and GitHub Actions.
+# Dependabot configuration for Terraform modules and GitHub Actions.
 #
-# Shared settings rationale:
-# - schedule.interval: "daily" - All modules use daily checks to ensure
-#   timely security updates and bug fixes across the entire infrastructure.
-# - open-pull-requests-limit: 10 - Prevents overwhelming the review queue
-#   while allowing multiple PRs for different dependencies in parallel.
+# All entries share the same schedule (daily) and open-pull-requests-limit (10)
+# to ensure timely updates without overwhelming the review queue.
+# Dependabot does not support YAML anchors, so these values are repeated per
+# directory intentionally.
 #
-# Note: Dependabot doesn't support YAML anchors, so settings are repeated per
-# directory. This is intentional to maintain consistency across all modules.
+# Each Terraform entry uses a group to consolidate all dependency updates for
+# that directory into a single PR, reducing review overhead.
 updates:
-  # Main infrastructure configuration
   - package-ecosystem: "terraform"
     directory: "/infra"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-infra:
+        patterns:
+          - "*"
 
-  # GKE module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/gke"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-gke:
+        patterns:
+          - "*"
 
-  # GitLab module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/gitlab"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-gitlab:
+        patterns:
+          - "*"
 
-  # Networking module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/networking"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-networking:
+        patterns:
+          - "*"
 
-  # Monitoring module dependencies
   - package-ecosystem: "terraform"
     directory: "/modules/monitoring"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-monitoring:
+        patterns:
+          - "*"
 
-  # GitHub Actions workflow dependencies
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
