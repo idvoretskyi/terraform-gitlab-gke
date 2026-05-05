@@ -1,37 +1,70 @@
 version: 2
+# Dependabot configuration for Terraform modules and GitHub Actions.
+#
+# All entries share the same schedule (daily) and open-pull-requests-limit (10)
+# to ensure timely updates without overwhelming the review queue.
+# Dependabot does not support YAML anchors, so these values are repeated per
+# directory intentionally.
+#
+# Each Terraform entry uses a group to consolidate all dependency updates for
+# that directory into a single PR, reducing review overhead.
 updates:
   - package-ecosystem: "terraform"
     directory: "/infra"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-infra:
+        patterns:
+          - "*"
 
   - package-ecosystem: "terraform"
     directory: "/modules/gke"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-gke:
+        patterns:
+          - "*"
 
   - package-ecosystem: "terraform"
     directory: "/modules/gitlab"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-gitlab:
+        patterns:
+          - "*"
 
   - package-ecosystem: "terraform"
     directory: "/modules/networking"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-networking:
+        patterns:
+          - "*"
 
   - package-ecosystem: "terraform"
     directory: "/modules/monitoring"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      terraform-monitoring:
+        patterns:
+          - "*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 10
+    groups:
+      github-actions:
+        patterns:
+          - "*"
